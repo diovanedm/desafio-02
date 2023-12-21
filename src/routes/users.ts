@@ -46,8 +46,8 @@ export async function userRoutes (app: FastifyInstance): Promise<void> {
 
       const allUserMeals = await knex('meals').where('user_id', id).select('*')
 
-      let sequence = 0 // 2
-      let bestSequenceMelsInDiet = 0 //
+      let sequence = 0
+      let bestSequenceMelsInDiet = 0
       allUserMeals.forEach(meal => {
         if (meal.isIncluded === 1) {
           sequence = sequence + 1
