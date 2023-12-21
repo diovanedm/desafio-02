@@ -1,11 +1,10 @@
-// Update with your config settings.
-
 import setupKnex, { type Knex } from 'knex'
+import { env } from './src/env'
 
 const config: Knex.Config = {
   client: 'sqlite',
   connection: {
-    filename: './db/app.db'
+    filename: env.DATABASE_URL
   },
   useNullAsDefault: true,
   migrations: {

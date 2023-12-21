@@ -1,33 +1,9 @@
-import fastify from 'fastify'
-import { ZodError, z } from 'zod'
-import { knex } from '../knexfile'
-const server = fastify()
+import { app } from './app'
+import { env } from './env'
 
-server.post('/create-user', async (req, reply) => {
-  try {
-    const bodySchema = z.object({
-      name: z.string().min(3)
-    })
-
-    const { name } = bodySchema.parse(req.body)
-
-    await knex('users').insert({
-      name
-    })
-    return await reply.status(201).send()
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return await reply.status(400).send(error.message)
-    }
-    return await reply.send(error)
-  }
+app.listen({
+  port: env.PORT
+}).then(() => {
+  console.log('Server running!')
 })
-
-server.get('/list-users', async (req, reply) => {
-
-})
-
-server.listen({
-  port: 3333
-}).then(() => { console.log('Server running!') })
   .catch(e => { console.log(e) })
